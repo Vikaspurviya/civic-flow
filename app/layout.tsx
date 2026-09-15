@@ -3,8 +3,9 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
+  title: 'CityDesk — Smart City Complaint Dashboard',
+  description:
+    'Track, triage, and resolve civic complaints across the city with live stats, analytics, and status management.',
   generator: 'v0.app',
   icons: {
     icon: [
