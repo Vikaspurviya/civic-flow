@@ -1,7 +1,7 @@
 "use client"
 
 import { useMemo, useState } from "react"
-import { Building2, Plus } from "lucide-react"
+import { Building2, LogOut, Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { StatCards } from "@/components/stat-cards"
 import { ComplaintCharts } from "@/components/complaint-charts"
@@ -9,9 +9,11 @@ import { ComplaintsTable } from "@/components/complaints-table"
 import { ComplaintDetail } from "@/components/complaint-detail"
 import { SubmitComplaint } from "@/components/submit-complaint"
 import { useComplaints } from "@/components/complaint-store"
+import { useAuth } from "@/components/auth-store"
 
 export function Dashboard() {
   const { complaints } = useComplaints()
+  const { user, signOut } = useAuth()
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const [submitOpen, setSubmitOpen] = useState(false)
 
@@ -33,11 +35,29 @@ export function Dashboard() {
               <p className="text-xs text-muted-foreground">Smart City Complaint Dashboard</p>
             </div>
           </div>
-          <Button onClick={() => setSubmitOpen(true)}>
-            <Plus className="size-4" />
-            <span className="hidden sm:inline">New complaint</span>
-            <span className="sm:hidden">New</span>
-          </Button>
+          <div className="flex items-center gap-2 sm:gap-3">
+            <Button onClick={() => setSubmitOpen(true)}>
+              <Plus className="size-4" />
+              <span className="hidden sm:inline">New complaint</span>
+              <span className="sm:hidden">New</span>
+            </Button>
+            <div className="hidden items-center gap-2 border-l border-border pl-3 sm:flex">
+              <div className="flex size-8 items-center justify-center rounded-full bg-accent text-xs font-semibold text-accent-foreground">
+                {(user?.name ?? "?")
+                  .split(" ")
+                  .map((p) => p[0])
+                  .slice(0, 2)
+                  .join("")}
+              </div>
+              <div className="leading-tight">
+                <p className="text-xs font-medium text-foreground">{user?.name}</p>
+                <p className="text-[11px] text-muted-foreground">{user?.role}</p>
+              </div>
+            </div>
+            <Button variant="ghost" size="icon" onClick={signOut} aria-label="Sign out" title="Sign out">
+              <LogOut className="size-4" />
+            </Button>
+          </div>
         </div>
       </header>
 

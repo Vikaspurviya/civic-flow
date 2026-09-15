@@ -1,10 +1,13 @@
+import { AuthProvider } from "@/components/auth-store"
+import { AuthGate } from "@/components/auth-gate"
 import { ComplaintStoreProvider } from "@/components/complaint-store"
-import { Dashboard } from "@/components/dashboard"
 
 export default function Page() {
   return (
-    <ComplaintStoreProvider>
-      <Dashboard />
-    </ComplaintStoreProvider>
+    <AuthProvider>
+      <ComplaintStoreProvider>
+        <AuthGate />
+      </ComplaintStoreProvider>
+    </AuthProvider>
   )
 }
